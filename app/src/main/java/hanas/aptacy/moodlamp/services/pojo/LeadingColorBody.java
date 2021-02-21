@@ -1,4 +1,4 @@
-package hanas.aptacy.moodlamp.pojo;
+package hanas.aptacy.moodlamp.services.pojo;
 
 import android.graphics.Color;
 

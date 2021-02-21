@@ -1,12 +1,10 @@
-package hanas.aptacy.moodlamp;
+package hanas.aptacy.moodlamp.services;
 
 import java.util.List;
 
-import hanas.aptacy.moodlamp.pojo.LeadingColorBody;
+import hanas.aptacy.moodlamp.services.pojo.LeadingColorBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface LeadingColorsService {
