@@ -1,5 +1,8 @@
 package hanas.aptacy.moodlamp;
 
+import android.app.WallpaperManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.spotify.android.appremote.api.ConnectionParams;
@@ -8,12 +11,14 @@ import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import hanas.aptacy.moodlamp.services.LeadingColorsService;
 import hanas.aptacy.moodlamp.services.pojo.LeadingColorBody;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,8 +47,8 @@ public class MainActivityPresenter {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
-                .readTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS);
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS);
 
         httpClient.addInterceptor(logging);  // <-- this is the important line!
 
@@ -95,16 +100,29 @@ public class MainActivityPresenter {
             String imageUri = track.imageUri.raw;
             String imageId = imageUri.substring(imageUri.lastIndexOf(":") + 1);
             String imageURLString = "https://i.scdn.co/image/" + imageId;
-
-            view.setAlbumCoverImage(imageURLString);
+            view.setSongInfo(track.name, track.artist.name, imageURLString);
             Call<List<LeadingColorBody>> call = leadingColorsService.getColors(imageURLString);
             call.enqueue(new Callback<List<LeadingColorBody>>() {
                 @Override
                 public void onResponse(Call<List<LeadingColorBody>> call, Response<List<LeadingColorBody>> response) {
                     List<LeadingColorBody> leadingColors = response.body();
-                    leadingColors.remove(0);
-                    leadingColors.remove(0);
                     view.setColorsOfNewAlbumCover(leadingColors);
+                    int[] screenSize = view.getScreenSize();
+                    Call<ResponseBody> callImage = leadingColorsService.getWallpaper(10000, screenSize[1], screenSize[0], leadingColors);
+                    callImage.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            InputStream is = response.body().byteStream();
+                            Bitmap bitmap = BitmapFactory.decodeStream(is);
+                            view.setWallpaperFromBitmap(bitmap);
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            view.showLeadingColorServiceResponseError(t);
+                            Log.e("API failure", t.getMessage(), t);
+                        }
+                    });
                     Log.d("API response", response.toString());
                 }
 
