@@ -20,6 +20,12 @@ public class LeadingColorBody {
         return  Color.rgb(color.get(0), color.get(1), color.get(2));
     }
 
+    public float[] getHSV() {
+        float[] hsv = new float[3];;
+        Color.RGBToHSV(color.get(0), color.get(1), color.get(2), hsv);
+        return hsv;
+    }
+
     public void setColor(List<Integer> color) {
         this.color = color;
     }

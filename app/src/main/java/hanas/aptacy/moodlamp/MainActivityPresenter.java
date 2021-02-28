@@ -12,11 +12,16 @@ import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
 
 import java.io.InputStream;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import hanas.aptacy.moodlamp.services.LeadingColorsService;
 import hanas.aptacy.moodlamp.services.pojo.LeadingColorBody;
+import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,13 +33,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivityPresenter {
 
-    private static final String LEADING_COLORS_URL = "https://moodlamp-leading-color.herokuapp.com";
+    private static final String LEADING_COLORS_URL = "https://spotify-color-wallpapers-oxle3cwiga-ey.a.run.app"; //"https://moodlamp-leading-color.herokuapp.com";
     private static final String CLIENT_ID = "6d7d697321a74a419a8ede8b74c6a7c8";
     private static final String REDIRECT_URI = "https://trello.com/b/zYzvg43L/moodlamp";
 
     private SpotifyAppRemote spotifyAppRemote;
     private LeadingColorsService leadingColorsService;
     private Track previousTrack;
+    private Dispatcher dispatcher;
 
     private MainActivityView view;
 
@@ -45,12 +51,15 @@ public class MainActivityPresenter {
     public void connectWithLeadingColorsService() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        dispatcher = new Dispatcher();
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
                 .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS);
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .dispatcher(dispatcher);
 
         httpClient.addInterceptor(logging);  // <-- this is the important line!
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(LEADING_COLORS_URL)
@@ -93,36 +102,49 @@ public class MainActivityPresenter {
         view.connectWithSpotify(connectionParams, new SpotifyConnectionListener());
     }
 
+    private String currentImageURLString;
 
     private void newSpotifySong(PlayerState playerState) {
         final Track track = playerState.track;
         if (track != null && (previousTrack == null || !track.imageUri.equals(previousTrack.imageUri))) {
+            dispatcher.cancelAll();
             String imageUri = track.imageUri.raw;
             String imageId = imageUri.substring(imageUri.lastIndexOf(":") + 1);
             String imageURLString = "https://i.scdn.co/image/" + imageId;
+            currentImageURLString = imageURLString;
             view.setSongInfo(track.name, track.artist.name, imageURLString);
+
             Call<List<LeadingColorBody>> call = leadingColorsService.getColors(imageURLString);
             call.enqueue(new Callback<List<LeadingColorBody>>() {
                 @Override
                 public void onResponse(Call<List<LeadingColorBody>> call, Response<List<LeadingColorBody>> response) {
-                    List<LeadingColorBody> leadingColors = response.body();
-                    view.setColorsOfNewAlbumCover(leadingColors);
-                    int[] screenSize = view.getScreenSize();
-                    Call<ResponseBody> callImage = leadingColorsService.getWallpaper(10000, screenSize[1], screenSize[0], leadingColors);
-                    callImage.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            InputStream is = response.body().byteStream();
-                            Bitmap bitmap = BitmapFactory.decodeStream(is);
-                            view.setWallpaperFromBitmap(bitmap);
-                        }
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            view.showLeadingColorServiceResponseError(t);
-                            Log.e("API failure", t.getMessage(), t);
-                        }
-                    });
+                    List<LeadingColorBody> leadingColors = response.body();
+                    LeadingColorBody prominentColor = leadingColors != null ? leadingColors.stream()
+                            .filter(leadingColorBody -> leadingColorBody.getHSV()[2] > 0.2 && leadingColorBody.getHSV()[2] < 0.8)
+                            .max(Comparator.comparing(leadingColorBody -> leadingColorBody.getHSV()[1]))
+                            .orElseGet(() -> leadingColors.get(0)) : null;
+
+                        view.setFabColor(prominentColor.getColor());
+                        view.setColorsOfNewAlbumCover(leadingColors);
+                        int[] screenSize = view.getScreenSize();
+                        Call<ResponseBody> callImage = leadingColorsService.getWallpaper(2000, screenSize[1], screenSize[0], leadingColors);
+                        callImage.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    InputStream is = response.body().byteStream();
+                                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                                    view.setWallpaperToActivityBackground(bitmap);
+                                    view.setWallpaperFromBitmap(bitmap);
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                view.showLeadingColorServiceResponseError(t);
+                                Log.e("API failure", t.getMessage(), t);
+                            }
+                        });
+//                    }
                     Log.d("API response", response.toString());
                 }
 

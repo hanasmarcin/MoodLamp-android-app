@@ -1,44 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <FrameLayout
+        android:id="@+id/frl_main_base"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
     <include layout="@layout/content_main" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
+        android:layout_height="match_parent">
 
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bab_main_app_bar"
+            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:backgroundTint="#FF424242"
+            app:elevation="12dp"
+            app:fabAlignmentMode="end"
+            app:fabCradleMargin="5dp"
+            app:fabCradleRoundedCornerRadius="12dp"
+            app:menu="@menu/menu_main_btm_app_bar" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_main_expand_wallpaper_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="28dp"
+            android:tint="@android:color/secondary_text_dark"
+            android:visibility="visible"
+            app:backgroundTint="#FFFFFF"
+            app:elevation="12dp"
+            app:layout_anchor="@id/bab_main_app_bar"
+            app:srcCompat="@drawable/ic_action_image"
+            app:tint="#E6FFFFFF" />
+
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:id="@+id/mcv_main_set"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:animateLayoutChanges="true"-->
+        <!--            app:cardBackgroundColor="#FF424242"-->
+        <!--            app:cardCornerRadius="12dp"-->
+        <!--            app:cardElevation="12dp"-->
+        <!--            android:layout_gravity="center_vertical|start"-->
+        <!--            app:layout_anchor="@id/fab_main_set_wallpaper"-->
+        <!--            app:layout_anchorGravity="center_vertical|start" >-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv_main_set_wallpaper_label"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:fontFamily="sans-serif-thin"-->
+        <!--                android:maxHeight="40dp"-->
+        <!--                android:paddingStart="16dp"-->
+        <!--                android:paddingTop="8dp"-->
+        <!--                android:paddingEnd="16dp"-->
+        <!--                android:paddingBottom="8dp"-->
+        <!--                android:text="Set as a wallpaper"-->
+        <!--                android:textColor="#E6FFFFFF"-->
+        <!--                android:textSize="12sp" />-->
+        <!--        </com.google.android.material.card.MaterialCardView>-->
+
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/fab_main_save_wallpaper"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="top|center_horizontal"-->
+        <!--            android:layout_marginBottom="20dp"-->
+        <!--            android:visibility="visible"-->
+        <!--            app:fabSize="mini"-->
+        <!--            app:srcCompat="@drawable/ic_action_save"-->
+        <!--            app:tint="#E6FFFFFF"-->
+        <!--            app:layout_anchor="@id/fab_main_expand_wallpaper_actions"-->
+        <!--            app:layout_anchorGravity="center_horizontal|top" />-->
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:id="@+id/mcv_main_save"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:animateLayoutChanges="true"-->
+        <!--            android:visibility="visible"-->
+        <!--            app:cardBackgroundColor="#FF424242"-->
+        <!--            app:cardCornerRadius="12dp"-->
+        <!--            app:cardElevation="12dp"-->
+        <!--            android:layout_gravity="center_vertical|start"-->
+        <!--            app:layout_anchor="@id/fab_main_save_wallpaper"-->
+        <!--            app:layout_anchorGravity="center_vertical|start">-->
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv_main_save_wallpaper_label"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:fontFamily="sans-serif-thin"-->
+        <!--                android:maxHeight="40dp"-->
+        <!--                android:paddingStart="16dp"-->
+        <!--                android:paddingTop="8dp"-->
+        <!--                android:paddingEnd="16dp"-->
+        <!--                android:paddingBottom="8dp"-->
+        <!--                android:text="Save"-->
+        <!--                android:textColor="#E6FFFFFF"-->
+        <!--                android:textSize="12sp"-->
+        <!--                android:visibility="visible" />-->
+        <!--        </com.google.android.material.card.MaterialCardView>-->
+
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/fab_main_set_wallpaper"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            app:fabSize="mini"-->
+        <!--            app:srcCompat="@drawable/ic_action_palette"-->
+        <!--            app:tint="#E6FFFFFF"-->
+        <!--            android:layout_gravity="top|center_horizontal"-->
+        <!--            app:layout_anchor="@id/fab_main_save_wallpaper"-->
+        <!--            app:layout_anchorGravity="center_horizontal|top" />-->
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csl_main_base"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_main_save_wallpaper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="100dp"
+            app:backgroundTint="#FF424242"
+            app:elevation="12dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_action_save"
+            app:tint="#E6FFFFFF" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_main_set_wallpaper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:backgroundTint="#FF424242"
+            app:elevation="12dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/fab_main_save_wallpaper"
+            app:layout_constraintEnd_toEndOf="@+id/fab_main_save_wallpaper"
+            app:layout_constraintStart_toStartOf="@+id/fab_main_save_wallpaper"
+            app:srcCompat="@drawable/ic_action_palette"
+            app:tint="#E6FFFFFF" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_main_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="#FF424242"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main_set_wallpaper"
+            app:layout_constraintEnd_toStartOf="@+id/fab_main_set_wallpaper"
+            app:layout_constraintTop_toTopOf="@+id/fab_main_set_wallpaper">>
+
+            <TextView
+                android:id="@+id/tv_main_set_wallpaper_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="Set as a wallpaper"
+                android:textColor="#E6FFFFFF"
+                android:textSize="12sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_main_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="#FF424242"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main_save_wallpaper"
+            app:layout_constraintEnd_toStartOf="@+id/fab_main_save_wallpaper"
+            app:layout_constraintTop_toTopOf="@+id/fab_main_save_wallpaper">>
+
+            <TextView
+                android:id="@+id/tv_main_save_wallpaper_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="Save"
+                android:textColor="#E6FFFFFF"
+                android:textSize="12sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </RelativeLayout>
 
 </FrameLayout>

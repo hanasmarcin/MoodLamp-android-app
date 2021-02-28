@@ -2,176 +2,184 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
+    android:id="@+id/csl_main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#70000000">
-
-    </FrameLayout>
+    tools:showIn="@layout/activity_main"
+    android:animateLayoutChanges="true">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/imageViewCard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="30dp"
-        android:elevation="10dp"
+        android:id="@+id/mcv_main_song_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
         app:cardBackgroundColor="#FF424242"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardViewTitle"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:animateLayoutChanges="true">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_main_song_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:animateLayoutChanges="true"
+                android:background="#9C4444"
+                android:backgroundTint="#39FFFFFF"
+                app:cardBackgroundColor="#FF424242"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_main_song_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    tools:srcCompat="@tools:sample/avatars"
+                    />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_main_song_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/roboto_slab"
+                android:gravity="center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:maxWidth="200dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="@string/main_title_stub"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/mcv_main_song_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_main_song_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/roboto_slab_light"
+                android:gravity="center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:maxWidth="200dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="@string/main_artist_name_stub"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@android:color/secondary_text_dark"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/mcv_main_song_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_main_song_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:elevation="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:animateLayoutChanges="true"
         app:cardBackgroundColor="#FF424242"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewCard"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewCard"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/imageViewCard"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:cardCornerRadius="12dp"
+        app:cardElevation="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/mcv_main_song_info"
+        app:layout_constraintStart_toStartOf="@+id/mcv_main_song_info"
+        app:layout_constraintTop_toBottomOf="@+id/mcv_main_song_info">
 
         <LinearLayout
-            android:id="@+id/color_frame"
+            android:id="@+id/lnl_main_dominant_colors_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:baselineAligned="false"
-            android:gravity="center"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <FrameLayout
-                android:id="@+id/color_1"
-                android:layout_width="match_parent"
+                android:id="@+id/frl_main_color_1"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:animateLayoutChanges="true">
 
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/color_2"
-                android:layout_width="match_parent"
+                android:id="@+id/frl_main_color_2"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:animateLayoutChanges="true">
 
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/color_3"
-                android:layout_width="match_parent"
+                android:id="@+id/frl_main_color_3"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:animateLayoutChanges="true">
 
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/color_4"
-                android:layout_width="match_parent"
+                android:id="@+id/frl_main_color_4"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:animateLayoutChanges="true">
 
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/color_5"
-                android:layout_width="match_parent"
+                android:id="@+id/frl_main_color_5"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:animateLayoutChanges="true">
 
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/color_6"
-                android:layout_width="match_parent"
+                android:id="@+id/frl_main_color_6"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5">
+                android:animateLayoutChanges="true">
 
             </FrameLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardViewTitle"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:elevation="10dp"
-        app:cardBackgroundColor="#FF424242"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewCard"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/imageViewCard"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewCard" >
-
-        <TextView
-            android:id="@+id/song_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:fontFamily="sans-serif-smallcaps"
-            android:gravity="center_vertical"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#D0FFFFFF"
-            android:textSize="24sp" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/song_artist"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:fontFamily="sans-serif-smallcaps"
-        android:gravity="center_vertical"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#D0FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewCard"
-        app:layout_constraintStart_toStartOf="@+id/imageViewCard"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardViewTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

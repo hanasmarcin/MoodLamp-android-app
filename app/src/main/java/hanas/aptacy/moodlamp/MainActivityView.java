@@ -1,6 +1,7 @@
 package hanas.aptacy.moodlamp;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -15,6 +16,10 @@ public interface MainActivityView {
     void showSpotifyConnectionError(Throwable throwable);
     void showLeadingColorServiceResponseError(Throwable t);
     void connectWithSpotify(ConnectionParams connectionParams, Connector.ConnectionListener spotifyConnectionListener);
+
+    void setWallpaperToActivityBackground(Bitmap bitmap);
+
     void setWallpaperFromBitmap(Bitmap bitmap);
     int[] getScreenSize();
+    void setFabColor(int prominentColor);
 }
