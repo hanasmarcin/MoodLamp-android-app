@@ -1,0 +1,35 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Wallpapers">
+
+        <SwitchPreferenceCompat
+            app:key="save_wallpaper"
+            app:title="Save new wallpapers"
+            app:summaryOn="Automatically save as an image in device gallery "
+            app:summaryOff="Don't save as an image in device gallery"
+            app:defaultValue="false"/>
+
+        <SwitchPreferenceCompat
+            android:foregroundTintMode="add"
+            app:defaultValue="true"
+            app:key="set_wallpaper"
+            app:summaryOff="Don't set as a wallpaper on the device"
+            app:summaryOn="Automatically set as a wallpaper on the device "
+            app:title="Set new wallpapers" />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="About">
+
+        <Preference
+            android:key="about"
+            android:title="Developer"
+            android:selectable="true"
+            android:singleLineTitle="false"
+            android:summary="Marcin Hanas">
+<!--            <intent android:action="your.package.path.to.Activity"/>-->
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

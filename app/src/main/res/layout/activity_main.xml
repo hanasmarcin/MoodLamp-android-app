@@ -14,7 +14,8 @@
 
     </FrameLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_main"
+        android:id="@+id/content_main"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -189,7 +190,6 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="Set as a wallpaper"
-                android:textColor="#E6FFFFFF"
                 android:textSize="12sp" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -215,7 +215,6 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="Save"
-                android:textColor="#E6FFFFFF"
                 android:textSize="12sp" />
         </com.google.android.material.card.MaterialCardView>
 
