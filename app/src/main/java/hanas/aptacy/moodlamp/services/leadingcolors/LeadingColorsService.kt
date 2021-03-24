@@ -10,11 +10,11 @@ import retrofit2.http.Query
 
 interface LeadingColorsService {
     @GET("/colors")
-    fun getColors(@Query("url") url: String?): Call<List<LeadingColorBody?>?>?
+    suspend fun getColors(@Query("url") url: String?): List<LeadingColorBody?>?
 
     @POST("/wallpaper")
-    fun getWallpaper(@Query("batch") batch: Int,
+    suspend fun getWallpaper(@Query("batch") batch: Int,
                      @Query("x_size") height: Int,
                      @Query("y_size") width: Int,
-                     @Body leadingColors: List<LeadingColorBody?>?): Call<ResponseBody?>?
+                     @Body leadingColors: List<LeadingColorBody?>?): ResponseBody?
 }

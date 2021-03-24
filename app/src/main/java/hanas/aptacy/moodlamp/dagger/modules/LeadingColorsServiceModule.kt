@@ -20,9 +20,7 @@ class LeadingColorsServiceModule {
     private val dispatcher = Dispatcher()
 
     @Provides
-    fun provideDispatcher(): Dispatcher {
-        return Dispatcher()
-    }
+    fun provideDispatcher(): Dispatcher = dispatcher
 
     @Provides
     fun provideService(): LeadingColorsService {
