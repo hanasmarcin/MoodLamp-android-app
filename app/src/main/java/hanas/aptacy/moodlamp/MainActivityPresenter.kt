@@ -40,8 +40,8 @@ class MainActivityPresenter @Inject constructor(
             view.setColorsOfNewAlbumCover(leadingColors)
             val screenSize: IntArray = view.screenSize ?: intArrayOf(2000, 1000)
             withContext(Dispatchers.IO) {
-                val response = leadingColorsService.getWallpaper(2000, screenSize[1], screenSize[0], leadingColors)
-                getWallpaperSuccessful(response)
+                val wallpaperResponse = leadingColorsService.getWallpaper(2000, screenSize[1], screenSize[0], leadingColors)
+                getWallpaperSuccessful(wallpaperResponse)
             }
         }
     }
