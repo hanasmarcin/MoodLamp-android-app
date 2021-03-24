@@ -4,9 +4,16 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Named
 
 @Module
 class ScopesModule {
     @Provides
-    fun provideCoroutineScope(): CoroutineScope = CoroutineScope(Dispatchers.IO)
+    @Named("IO")
+    fun provideIOScope(): CoroutineScope = CoroutineScope(Dispatchers.IO)
+
+    @Provides
+    @Named("UI")
+    fun provideUIScope(): CoroutineScope = CoroutineScope(Dispatchers.Main)
+
 }

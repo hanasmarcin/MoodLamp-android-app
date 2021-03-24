@@ -11,12 +11,13 @@ import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
 import okhttp3.ResponseBody
 import javax.inject.Inject
+import javax.inject.Named
 
 class MainActivityPresenter @Inject constructor(
         private val view: MainActivityView,
         private val dispatcher: Dispatcher,
         private val leadingColorsService: LeadingColorsService,
-        private val scope: CoroutineScope
+        @Named("IO") private val IOscope: CoroutineScope
 ) : SpotifyService.Callback {
 
     private var previousTrackImageUri: String? = null
@@ -71,7 +72,7 @@ class MainActivityPresenter @Inject constructor(
             dispatcher.cancelAll()
             view.setSongInfo(trackName, artist, coverUrl)
             previousTrackImageUri = coverUrl
-            scope.launch {
+            IOscope.launch {
                 try {
                     val response = leadingColorsService.getColors(coverUrl)
                     getColorsSuccessful(response)
